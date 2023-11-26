@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Reservas</title>
+    <!-- Agrega enlaces a tus estilos CSS si es necesario -->
+    <link rel="stylesheet" href="tu_estilo.css"> <!-- Reemplaza "tu_estilo.css" con la ruta a tu archivo CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Historial de Reservas</h2>
+        {% if historial_reservas %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID de Vuelo</th>
+                        <th>Nombre y Apellido</th>
+                        <th>País</th>
+                        <th>Número de Documento</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Sexo</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Detalles del Vuelo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in historial_reservas %}
+                        <tr>
+                            <td>{{ reserva.ID_Vuelos }}</td>
+                            <td>{{ reserva.Nombre_Apellido }}</td>
+                            <td>{{ reserva.Pais }}</td>
+                            <td>{{ reserva.Numero_de_Documento }}</td>
+                            <td>{{ reserva.Fecha_de_Nacimiento }}</td>
+                            <td>{{ reserva.Sexo }}</td>
+                            <td>{{ reserva.Email }}</td>
+                            <td>{{ reserva.Telefono }}</td>
+                            <td>
+                                <!-- botón para ver detalles del vuelo -->
+                                <a href="{% url 'detalles_vuelo' reserva.ID_Vuelos %}" class="btn btn-info">Detalles del Vuelo</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center">No hay reservas en el historial.</p>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
