@@ -167,15 +167,5 @@ body {
 
 
 
-/*Footer css */
 
-
-.light-section {
-    background-color: #fffcfc; /* Color claro para la sección de contacto */
-}
-
-.dark-section {
-    background-color: #fffefe; /* Color oscuro para la sección de copyright */
-    color: #fffcfc; /* Texto en color blanco para contrastar en la sección oscura */
-}
 
