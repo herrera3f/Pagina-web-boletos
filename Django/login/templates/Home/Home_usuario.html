@@ -1,13 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Reserva de Vuelos</title>
+    <title>Aero Reservas</title>
+    <link rel="icon" href="{% static 'Imagenes/logo.png' %}" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/navbarstyle.css' %}">
     <style>
         .rounded-card {
             border-radius: 15px;
@@ -28,68 +31,81 @@
     </style>
 </head>
 
-<body>
-
+<body> 
     <head>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="tu_logo.png" alt="Logo de la aplicación" class="logo-container">
+
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
+                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px" width="100px">
+                <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;"  >
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1" height="35px">
+                    <span>Ayuda</span>
+                </a>
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'home' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home" class="user-logo mb-1" height="35px">
+                    <span>Home</span>
+                </a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'historial_reservas' %}">Historial de Vuelos</a>
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'historial_reservas' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                            <span>Mis Viajes</span>
+                        </a>
                     </li>
-
-                    <li style="float: left;" >
-                        
-                    </li>
-                    
                 </ul>
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                    <span>Cerrar Sesion</span>
+                </a>
             </div>
         </nav>
 
     </head>
     <main>
-        <form action="{% url 'buscar_vuelos' %}" method="get">
-            <div class="container mt-5">
-                <div class="card rounded-card">
-                    <div class="card-body ">
-                        <h1 class="mb-2 custom-h1 text-center align-items-center">Buscar Vuelos</h1>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="Origen">Origen</label>
-                                <input type="text" class="form-control" id="origen" name="Origen" placeholder="Ciudad de origen" required>
+        <div class="form-container">
+            <form action="{% url 'buscar_vuelos' %}" method="get">
+                <div class="container mt-5 " >
+                    <div class="card rounded-card navbar-custom2" >
+                        <div class="card-body ">
+                            <h1 class="mb-2 custom-h1 text-center align-items-center">Buscar Vuelos</h1>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="Origen">Origen</label>
+                                    <input type="text" class="form-control" id="origen" name="Origen" placeholder="Ciudad de origen" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="Destino">Destino</label>
+                                    <input type="text" class="form-control" id="destino" name="Destino" placeholder="Ciudad de destino" required>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="fechaSalida">Fecha de Salida</label>
+                                    <input type="date" class="form-control" id="fechaSalida" name="fechaSalida">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="fechaLlegada">Fecha de Llegada</label>
+                                    <input type="date" class="form-control" id="fechaLlegada" name="fechaLlegada">
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="Destino">Destino</label>
-                                <input type="text" class="form-control" id="destino" name="Destino" placeholder="Ciudad de destino" required>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="fechaSalida">Fecha de Salida</label>
-                                <input type="date" class="form-control" id="fechaSalida" name="fechaSalida">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="fechaLlegada">Fecha de Llegada</label>
-                                <input type="date" class="form-control" id="fechaLlegada" name="fechaLlegada">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-5 mx-auto">
-                                <label class="invisible">Espaciador</label>
-                                <button type="submit" class="btn btn-primary btn-block">Buscar Vuelos</button>
+                            <div class="form-row">
+                                <div class="form-group col-md-5 mx-auto">
+                                    <label class="invisible">Espaciador</label>
+                                    <button type="submit" class="btn btn-primary btn-block custom-btn-buscar">Buscar Vuelos</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-
-
+            </form>
+    
+    
+        </div>
 
         <div class="container mt-5">
             <h1 class="promo text-center ">
@@ -102,8 +118,30 @@
             </div>
 
     </main>
-    <footer class="bg-light text-center py-3">
-        Sistema de Reserva de Vuelos © 2023
+    <footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs. <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
+        </div>
+    
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
+        </div>
+        <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
+            <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
+            © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
+        </div>
+    
     </footer>
 
 
@@ -124,9 +162,9 @@
                     const card = document.createElement('div');
                     card.className = 'col';
                     card.innerHTML = `
-                        <div class="card" style="width: 23rem; ">
-                            <div class="card-body">
-                                <a><img src="${vuelo.image}" class="card-img-top" alt="..."></a>
+                        <div class="card zoom-img" style="width: 23rem; ">
+                            <div class="card-body ">
+                                <a><img src="${vuelo.image}" class="card-img-top zoom-img" alt="..."></a>
                                 <h5 class="card-title">${vuelo["Nombre vuelo"]}</h5>
                                 <div class="row">
                                     <div class="col">
@@ -147,7 +185,7 @@
                                 <p class="card-text">Capacidad: ${vuelo.Capacidad}</p>
                                 <p class="card-text">Precio: ${vuelo.Precio}</p>
                                 <!-- Agrega otros campos necesarios -->
-                                <a href="{% url 'reserva' %}?ID_vuelo=${vuelo.ID_Vuelos}" class="btn btn-primary">Reservar</a>
+                                <a href="{% url 'reserva' %}?ID_vuelo=${vuelo.ID_Vuelos}" class="btn btn-custom-reservar">Reservar</a>
                             </div>
                         </div>
                     `;
@@ -157,7 +195,7 @@
             })
             .catch(error => console.error('Error al obtener vuelos:', error));
     </script>
-    
+
     
 
 

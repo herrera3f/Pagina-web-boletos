@@ -1,0 +1,181 @@
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    animation: fadeIn 1s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+.btn-square {
+    width: 70px; /* Ancho del botón */
+    height: 90px; /* Altura del botón */
+    margin: 4px; /* Margen para separar los botones */
+    text-align: center; /* Centra el texto horizontalmente en el botón */
+    text-decoration: none; /* Elimina la subrayado de los enlaces */
+    transition: box-shadow 0.3s ease; /* Transición para la sombra */
+    transition: background-color 0.3s;
+}
+
+.btn-square:hover {
+    background-color: #1673ac; /* Color cyan más oscuro o el color que prefieras */
+    color: #810e0e; /* Cambiar el color del texto al pasar el cursor */
+    box-shadow: 0 0.5rem 1rem rgba(137, 10, 10, 0.15); /* Sombra al pasar el cursor sobre el botón */
+}
+
+
+
+
+/* Estilos personalizados para el navbar */
+.navbar-custom {
+    background-color: rgb(214, 218, 220)/* Tu color cyan-600 */
+}
+
+/* Estilo del texto en todos los elementos del navbar */
+.navbar-custom .nav-link span,
+.navbar-custom .navbar-brand span,
+.navbar-custom .navbar-nav li span {
+    color: #000000; /* Cambia el color del texto a tu preferencia */
+}
+
+/* Estilo del texto al pasar el cursor sobre los elementos del navbar */
+.navbar-custom .nav-link:hover span,
+.navbar-custom .navbar-brand:hover span,
+.navbar-custom .navbar-nav li:hover span {
+    color: rgb(238, 236, 236); /* Cambia el color del texto al pasar el cursor */
+}
+
+.fade-gradient {
+    background: linear-gradient(to bottom, #0b2e46, #10496a, #0d577f, #0a669a, #0b80be);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    transition: background-position 0.3s ease-in-out;
+    background-size: 100% 200%;
+    background-position: 0 100%;
+}
+
+.fade-gradient:hover {
+    background-position: 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+ /* buscar vuelos css */ 
+.navbar-custom2 {
+    background-color:#f7f7f7/* Tu color cyan-600 */
+}
+
+/* Agrega un borde alrededor del formulario */
+.card.rounded-card {
+    border: 0px solid #000000; /* Cambia el color del borde a tu preferencia */
+    border-radius: 20px; /* Ajusta el radio del borde si lo deseas */
+
+    
+  
+}
+
+.rounded-card:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+    
+}
+
+   /* Contenedor del formulario con contorno alrededor */
+   .form-container {
+    background: url('https://img.freepik.com/fotos-premium/avion-pasajeros-aviones-comerciales_786587-3390.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+    border: 1px solid #040404; /* Cambia el color del contorno a tu preferencia */
+    border-radius: 0px; /* Ajusta el radio del contorno si lo deseas */
+    background-color: #1a4564; /* Cambia el color de fondo según tus preferencias */
+    padding: 2px; /* Ajusta el relleno según tus preferencias */
+    box-sizing: border-box; /* Hace que el contorno esté incluido en el tamaño total del formulario */
+    width: 100%; /* Ajusta el ancho del contenedor al 100% del contenedor principal */
+    max-width: 2600px; /* Establece un ancho máximo si lo deseas */
+}
+
+
+.custom-btn-buscar {
+    background-color: #0b80be; /* Puedes cambiar este color al que desees */
+    color: rgb(255, 254, 254);
+    transition: background-color 0.3s;
+    /* Agrega otros estilos si es necesario */
+}
+
+.custom-btn-buscar:hover {
+    background-color: #ffffff; /* Puedes cambiar este color al que desees */
+    color: #40b9f0;
+    /* Agrega otros estilos si es necesario */
+}
+
+
+
+
+
+/* cards css  */
+
+
+.zoom-img {
+    transition: transform 0.2s ease-in-out; /* Agrega una transición suave */
+}
+
+  .zoom-img:hover {
+    transform: scale(1.2); /* Escala la imagen al 110% al pasar el cursor */
+}
+
+
+ 
+
+.btn-custom-reservar {
+    background-color: #0b80be; /* Reemplaza "yourColor" con el color que desees */
+    color: #ffffff; /* Cambia el color del texto si es necesario */
+    transition: background-color 0.3s; /* Agrega una transición de color suave al botón */
+}
+
+
+
+  /* Efecto hover */
+  .btn-custom-reservar:hover {
+    background-color:#ffffff ;
+    color: #40b9f0; /* Cambia el color al pasar el cursor si es necesario */
+    border: 1px solid #0b80be; /* Agrega un borde del mismo color */
+ }
+
+
+
+
+
+
+/*Footer css */
+
+
+.light-section {
+    background-color: #fffcfc; /* Color claro para la sección de contacto */
+}
+
+.dark-section {
+    background-color: #fffefe; /* Color oscuro para la sección de copyright */
+    color: #fffcfc; /* Texto en color blanco para contrastar en la sección oscura */
+}
+
