@@ -33,7 +33,7 @@ def iniciar_sesion(request):
                 logging.info(f'Sesión iniciada para el usuario: {username}')
 
                 # Redirigir al usuario a la página deseada después del inicio de sesión
-                return render(request,'Home/Home_usuario.html')  # Reemplaza 'pagina_de_inicio' con la URL deseada
+                return render(request,'Home/Home.html')  # Reemplaza 'pagina_de_inicio' con la URL deseada
             else:
                 # Manejar el caso de autenticación fallida desde la API de Node.js
                 logging.error('Error en la autenticación desde la API de Node.js')
