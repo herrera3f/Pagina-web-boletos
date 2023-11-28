@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import requests 
-
 from django.shortcuts import HttpResponse
 from django.http import JsonResponse
 
@@ -29,10 +28,13 @@ def buscar_vuelos(request):
     # Obtener los parámetros de búsqueda desde request.GET
     Origen = request.GET.get('Origen', '')
     Destino = request.GET.get('Destino', '')
+    fecha_salida = request.GET.get('fechaSalida', '')
+    fecha_llegada = request.GET.get('fechaLlegada', '')
+
 
     # Realiza una solicitud HTTP a tu API de Node.js para obtener los vuelos
     url_api_node = 'http://localhost:3001/buscar-vuelos' 
-    params = {'Origen': Origen, 'Destino': Destino}
+    params = {'Origen': Origen, 'Destino': Destino, 'Fecha_y_hora_de_salida': fecha_salida, 'Fecha_y_hora_de_llegada': fecha_llegada}
 
     try:
         response = requests.get(url_api_node, params=params)
