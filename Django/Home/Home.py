@@ -30,11 +30,13 @@ def buscar_vuelos(request):
     Destino = request.GET.get('Destino', '')
     fecha_salida = request.GET.get('fechaSalida', '')
     fecha_llegada = request.GET.get('fechaLlegada', '')
+    vueloid = request.POST.get('ID_Vuelos')
+
 
 
     # Realiza una solicitud HTTP a tu API de Node.js para obtener los vuelos
     url_api_node = 'http://localhost:3001/buscar-vuelos' 
-    params = {'Origen': Origen, 'Destino': Destino, 'Fecha_y_hora_de_salida': fecha_salida, 'Fecha_y_hora_de_llegada': fecha_llegada}
+    params = {'Origen': Origen, 'Destino': Destino, 'Fecha_y_hora_de_salida': fecha_salida, 'Fecha_y_hora_de_llegada': fecha_llegada, 'Rut': request.session.get('usuario_rut'), 'ID_Vuelos': vueloid}
 
     try:
         response = requests.get(url_api_node, params=params)

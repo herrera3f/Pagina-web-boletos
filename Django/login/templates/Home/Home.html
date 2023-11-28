@@ -32,7 +32,7 @@
 </head>
 
 <body> 
-    <header>
+    <head>
 
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
             <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
@@ -60,20 +60,26 @@
                         </a>
                     </li>
                 </ul>
+
+                {% if usuario_rut %}
+                <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
                 <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'cerrar_sesion' %}">
                     <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
                     <span>Cerrar Sesión</span>
                 </a>
-                
+            {% else %}
+                <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
                 <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
                     <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                    <span>Inicio Session</span>
+                    <span>Iniciar Sesión</span>
                 </a>
+            {% endif %}
+        </div>
                 
             </div>
         </nav>
 
-    </header>
+    </head>
     <main>
         <div class="form-container">
             <form action="{% url 'buscar_vuelos' %}" method="get">
@@ -124,7 +130,7 @@
             </div>
 
     </main>
-    <footer class="container-fluid bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+    <footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
 
         <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
             <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
@@ -138,10 +144,10 @@
             <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
         </div>
     
-        <div class="col-md-3">
-            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebook" height="30px">
-            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px"></a>
-            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="Twitter logo" class="logo-twitter" height="30px">
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
         </div>
         <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
             <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">

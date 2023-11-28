@@ -136,42 +136,29 @@ app.get('/buscar-vuelos', async (req, res) => {
     // Obtén los parámetros de búsqueda desde req.query
     const origen = req.query.Origen;
     const destino = req.query.Destino;
-    const fecha_salida = req.query.Fecha_y_hora_de_salida;
-    const fecha_llegada = req.query.Fecha_y_hora_de_llegada;
+
+
 
     try {
-        // Verifica si las fechas son válidas antes de continuar
-        const isValidFechaSalida = moment(fecha_salida, 'YYYY-MM-DD', true).isValid();
-        const isValidFechaLlegada = moment(fecha_llegada, 'YYYY-MM-DD', true).isValid();
-
-        if (!isValidFechaSalida || !isValidFechaLlegada) {
-            throw new Error('Formato de fecha inválido');
-        }
-
-        // Formatea las fechas antes de realizar la búsqueda
-        const fecha_salida_formatted = moment(fecha_salida).format('DD/MM/YYYY');
-        const fecha_llegada_formatted = moment(fecha_llegada).format('DD/MM/YYYY');
-
-        // Realiza la búsqueda en la base de datos
+        // Busca los vuelos que coincidan con los parámetros de búsqueda
+    
         const vuelosEncontrados = await Avion.find({
             Origen: { $regex: new RegExp(origen, 'i') },
             Destino: { $regex: new RegExp(destino, 'i') },
-            'Fecha y hora de salida': fecha_salida_formatted,
-            'Fecha y hora de llegada': fecha_llegada_formatted,
+
         });
 
-        console.log('Origen:', origen);
-        console.log('Destino:', destino);
-        console.log('Fecha y hora de salida:', fecha_salida_formatted);
-        console.log('Fecha y hora de llegada:', fecha_llegada_formatted);
-
-        // Retorna los vuelos encontrados en formato JSON
+        // Formatea las fechas antes de enviar la respuesta
         res.status(200).json(vuelosEncontrados);
+
     } catch (error) {
         console.error('Error al buscar vuelos:', error);
         res.status(500).json({ mensaje: 'Error al buscar vuelos' });
     }
 });
+
+
+
 
 
 const ReservaSchema = new mongoose.Schema({
