@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,67 +9,143 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/navbarstyle.css' %}">
 </head>
 <body>
-    <div class="container-fluid bg-light" style="padding: 60px;">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="container py-2 bg-white rounded shadow">
-                    <h2 class="text-center">Formulario</h2>
-                    <form action="{% url 'reserva' %}" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="usuario_rut" name="usuario_rut" value="{{ request.GET.ID_Cliente }}" readonly>
-                        <div class="form-group">
-                            <label for="ID_vuelo">ID vuelo:</label>
-                            <input type="text" class="form-control" id="ID_vuelo" name="ID_Vuelos" value="{{ request.GET.ID_vuelo }}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_apellido">Nombre y Apellido:</label>
-                            <input type="text" class="form-control" id="nombre_apellido" name="Nombre_Apellido" placeholder="Nombre y Apellido" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pais">País:</label>
-                            <select class="form-control" id="pais" name="Pais">
-                                <option value="Argentina">Argentina</option>
-                                <option value="Brasil">Brasil</option>
-                                <option value="Chile">Chile</option>
-                                <!-- Agrega más opciones según tus necesidades -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="documento">Número de documento:</label>
-                            <input type="text" class="form-control" id="documento" name="Numero_de_Documento" required pattern="[0-9]+" title="Solo se permiten números">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                            <input type="date" class="form-control" id="fecha_nacimiento" name="Fecha_de_Nacimiento" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sexo">Sexo:</label>
-                            <select class="form-control" id="sexo" name="Sexo">
-                                <option value="Femenino">Femenino</option>
-                                <option value="Masculino">Masculino</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" class="form-control" id="telefono" name="Telefono" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Pagar</button>
-                    </form>
+    <head>
+
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
+                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px" width="100px">
+                <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;"  >
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1" height="35px">
+                    <span>Ayuda</span>
+                </a>
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'home' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home" class="user-logo mb-1" height="35px">
+                    <span>Home</span>
+                </a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'historial_reservas' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                            <span>Mis Viajes</span>
+                        </a>
+                    </li>
+                </ul>
+
+                {% if usuario_rut %}
+                <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'cerrar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                    <span>Cerrar Sesión</span>
+                </a>
+            {% else %}
+                <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                    <span>Iniciar Sesión</span>
+                </a>
+            {% endif %}
+        </div>
+                
+            </div>
+        </nav>
+
+    </head>
+    <main>
+        <div class="container-fluid bg-light" style="padding: 60px;">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="container py-2 bg-white rounded shadow">
+                        <h2 class="text-center">Formulario</h2>
+                        <form action="{% url 'reserva' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="invisible" id="usuario_rut" name="usuario_rut" value="{{ request.GET.ID_Cliente }}" readonly>
+                            <div class="form-group">
+                                <label for="ID_vuelo">ID vuelo:</label>
+                                <input type="text" class="form-control" id="ID_vuelo" name="ID_Vuelos" value="{{ request.GET.ID_vuelo }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre_apellido">Nombre y Apellido:</label>
+                                <input type="text" class="form-control" id="nombre_apellido" name="Nombre_Apellido" placeholder="Nombre y Apellido" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pais">País:</label>
+                                <select class="form-control" id="pais" name="Pais">
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Brasil">Brasil</option>
+                                    <option value="Chile">Chile</option>
+                                    <!-- Agrega más opciones según tus necesidades -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="documento">Número de documento:</label>
+                                <input type="text" class="form-control" id="documento" name="Numero_de_Documento" required pattern="[0-9]+" title="Solo se permiten números">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="Fecha_de_Nacimiento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo">Sexo:</label>
+                                <select class="form-control" id="sexo" name="Sexo">
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono:</label>
+                                <input type="tel" class="form-control" id="telefono" name="Telefono" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Pagar</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Agrega aquí tu contenido adicional a la derecha del formulario -->
                 </div>
             </div>
-            <div class="col-md-6">
-                <!-- Agrega aquí tu contenido adicional a la derecha del formulario -->
-            </div>
         </div>
-    </div>
+    </main>
+    <footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs. <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
+        </div>
+    
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
+        </div>
+        <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
+            <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
+            © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
+        </div>
+    
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

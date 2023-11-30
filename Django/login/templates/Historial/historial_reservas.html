@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,48 +10,128 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/navbarstyle.css' %}">
+
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Historial de Reservas</h2>
-        {% if historial_reservas %}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID de Vuelo</th>
-                        <th>Nombre y Apellido</th>
-                        <th>País</th>
-                        <th>Número de Documento</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Sexo</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Detalles del Vuelo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for reserva in historial_reservas %}
+    <head>
+
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
+                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px" width="100px">
+                <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;"  >
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1" height="35px">
+                    <span>Ayuda</span>
+                </a>
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'home' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home" class="user-logo mb-1" height="35px">
+                    <span>Home</span>
+                </a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'historial_reservas' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                            <span>Mis Viajes</span>
+                        </a>
+                    </li>
+                </ul>
+
+                {% if usuario_rut %}
+                <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'cerrar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                    <span>Cerrar Sesión</span>
+                </a>
+            {% else %}
+                <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                    <span>Iniciar Sesión</span>
+                </a>
+            {% endif %}
+        </div>
+                
+            </div>
+        </nav>
+
+    </head>
+
+    <main>
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Historial de Reservas</h2>
+            {% if historial_reservas %}
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ reserva.ID_Vuelos }}</td>
-                            <td>{{ reserva.Nombre_Apellido }}</td>
-                            <td>{{ reserva.Pais }}</td>
-                            <td>{{ reserva.Numero_de_Documento }}</td>
-                            <td>{{ reserva.Fecha_de_Nacimiento }}</td>
-                            <td>{{ reserva.Sexo }}</td>
-                            <td>{{ reserva.Email }}</td>
-                            <td>{{ reserva.Telefono }}</td>
-                            <td>
-                                <!-- botón para ver detalles del vuelo -->
-                                <a href="{% url 'detalles_vuelo' reserva.ID_Vuelos %}" class="btn btn-info">Detalles del Vuelo</a>
-                            </td>
+                            <th>ID de Vuelo</th>
+                            <th>Nombre y Apellido</th>
+                            <th>País</th>
+                            <th>Número de Documento</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Sexo</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Detalles del Vuelo</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p class="text-center">No hay reservas en el historial.</p>
-        {% endif %}
-    </div>
+                    </thead>
+                    <tbody>
+                        {% for reserva in historial_reservas %}
+                            <tr>
+                                <td>{{ reserva.ID_Vuelos }}</td>
+                                <td>{{ reserva.Nombre_Apellido }}</td>
+                                <td>{{ reserva.Pais }}</td>
+                                <td>{{ reserva.Numero_de_Documento }}</td>
+                                <td>{{ reserva.Fecha_de_Nacimiento }}</td>
+                                <td>{{ reserva.Sexo }}</td>
+                                <td>{{ reserva.Email }}</td>
+                                <td>{{ reserva.Telefono }}</td>
+                                <td>
+                                    <!-- botón para ver detalles del vuelo -->
+                                    <a href="{% url 'detalles_vuelo' reserva.ID_Vuelos %}" class="btn btn-info">Detalles del Vuelo</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center">No hay reservas en el historial.</p>
+            {% endif %}
+        </div>
+    </main>
+    
+    <footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs. <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
+        </div>
+    
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
+        </div>
+        <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
+            <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
+            © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
+        </div>
+    
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
