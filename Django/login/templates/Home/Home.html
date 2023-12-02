@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -31,51 +32,72 @@
     </style>
 </head>
 
-<body> 
+<body>
+
     <head>
 
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
             <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
-                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px" width="100px">
+                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container"
+                    height="95px" width="100px">
                 <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;"  >
-                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
-                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1" height="35px">
+            <!-- agregar el Nombre de usuario en la barra de navegación -->
+            <div>
+
+            </div>
+
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;">
+                <a
+                    class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda"
+                        class="user-logo mb-1" height="35px">
                     <span>Ayuda</span>
                 </a>
-                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'home' %}">
-                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home" class="user-logo mb-1" height="35px">
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                    href="{% url 'home' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home"
+                        class="user-logo mb-1" height="35px">
                     <span>Home</span>
                 </a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'historial_reservas' %}">
-                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                            href="{% url 'historial_reservas' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario"
+                                class="user-logo mb-1" height="20px">
                             <span>Mis Viajes</span>
                         </a>
                     </li>
                 </ul>
+                <div id="user-container">
+                    {% if usuario_rut %}
+                    <div class="user-container nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                        <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                        <span>{{ usuario_rut }}</span>
+                    
+                        <!-- También puedes mostrar un botón de cerrar sesión aquí si lo deseas -->
+                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-outline-light btn-square mx-2" id="logout-button" style="display: none;">
+                            <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </div>
+                    {% else %}
+                        <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                            <span>Iniciar Sesión</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
 
-                {% if usuario_rut %}
-                <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
-                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'cerrar_sesion' %}">
-                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                    <span>Cerrar Sesión</span>
-                </a>
-            {% else %}
-                <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
-                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                    <span>Iniciar Sesión</span>
-                </a>
-            {% endif %}
-        </div>
-                
             </div>
         </nav>
 
@@ -83,40 +105,45 @@
     <main>
         <div class="form-container">
             <form action="{% url 'buscar_vuelos' %}" method="get">
-                <div class="container mt-5 " >
-                    <div class="card rounded-card navbar-custom2" >
+                <div class="container mt-5 ">
+                    <div class="card rounded-card navbar-custom2">
                         <div class="card-body ">
                             <h1 class="mb-2 custom-h1 text-center align-items-center">Buscar Vuelos</h1>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="Origen">Origen</label>
-                                    <input type="text" class="form-control" id="origen" name="Origen" placeholder="Ciudad de origen" required>
+                                    <input type="text" class="form-control" id="origen" name="Origen"
+                                        placeholder="Ciudad de origen" required>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="Destino">Destino</label>
-                                    <input type="text" class="form-control" id="destino" name="Destino" placeholder="Ciudad de destino" required>
+                                    <input type="text" class="form-control" id="destino" name="Destino"
+                                        placeholder="Ciudad de destino" required>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="fechaSalida">Fecha de Salida</label>
-                                    <input type="date" class="form-control" id="fechaSalida" name="Fecha_y_hora_de_salida">
+                                    <label for="Fecha_y_hora_de_salida">Fecha de Salida</label>
+                                    <input type="date" class="form-control" id="fechaSalida"
+                                        name="Fecha_y_hora_de_salida" >
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="fechaLlegada">Fecha de Llegada</label>
-                                    <input type="date" class="form-control" id="fechaLlegada" name="Fecha_y_hora_de_llegada">
+                                    <label for="Fecha_y_hora_de_llegada">Fecha de Llegada</label>
+                                    <input type="date" class="form-control" id="fechaLlegada"
+                                        name="Fecha_y_hora_de_llegada" >
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5 mx-auto">
                                     <label class="invisible">Espaciador</label>
-                                    <button type="submit" class="btn btn-primary btn-block custom-btn-buscar">Buscar Vuelos</button>
+                                    <button type="submit" class="btn btn-primary btn-block custom-btn-buscar">Buscar
+                                        Vuelos</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-    
-    
+
+
         </div>
 
         <div class="container mt-5">
@@ -130,30 +157,38 @@
             </div>
 
     </main>
-    <footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+    <footer class="bg-light text-center py-3 bg-body-secondary"
+        style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
 
         <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
-            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
+            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad.
+                <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
         </div>
-    
+
         <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
-            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs. <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
+            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs.
+                <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
         </div>
-    
+
         <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
-            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
+            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas.
+                <br>Premium Connectivity Partner</p>
         </div>
-    
+
         <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
-            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
-            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
-            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok"
+                height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img
+                    src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo"
+                    class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter "
+                height="30px" style="margin-left: 15px;">
         </div>
         <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
             <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
             © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
         </div>
-    
+
     </footer>
 
 
@@ -169,7 +204,7 @@
             .then(response => response.json())
             .then(vuelos => {
                 const vuelosContainer = document.getElementById('vuelos-container');
-    
+
                 vuelos.forEach(vuelo => {
                     const card = document.createElement('div');
                     card.className = 'col';
@@ -207,7 +242,39 @@
             })
             .catch(error => console.error('Error al obtener vuelos:', error));
     </script>
+    <script>
+        // Esperar a que el documento esté listo
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mostrar el botón de cerrar sesión al hacer clic en el nombre de usuario
+            document.getElementById("user-container").addEventListener("click", function() {
+                document.getElementById("logout-button").style.display = "inline-block";
+            });
+        });
+    </script>
+    <script>
+        //cambiar el formato de la fecha de 2023-05-01 a 01/05/2021
+        function cambiarFormatoFecha(fecha) {
+            var fecha = document.getElementById("fechaSalida").value || document.getElementById("fechaLlegada").value;
+            var fecha = fecha.split("-");
+            var fecha = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
+            //dar vuelta de 2023-05-01 a 01/05/2021
+            var fecha = fecha.split("-").reverse().join("/");
 
+            document.getElementById("fechaSalida").value = fecha;
+            document.getElementById("fechaLlegada").value = fecha;
+        }
+        //insertar el valor de la fecha en el input
+        document.getElementById("fechaSalida").addEventListener("change", cambiarFormatoFecha);
+        document.getElementById("fechaLlegada").addEventListener("change", cambiarFormatoFecha);     
+        //mostrar la decha al seleccionar el input
+        document.getElementById("fechaSalida").value = fecha;       
+        document.getElementById("fechaLlegada").value = fecha;
+        console.log(fecha);
+
+
+
+        
+    </script>
     
 
 

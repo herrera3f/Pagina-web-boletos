@@ -9,6 +9,8 @@ const moment = require('moment');
 
 
 
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -136,6 +138,8 @@ app.get('/buscar-vuelos', async (req, res) => {
     // Obtén los parámetros de búsqueda desde req.query
     const origen = req.query.Origen;
     const destino = req.query.Destino;
+    const fecha_salida = req.query.Fecha_y_hora_de_salida;
+    const fecha_llegada = req.query.Fecha_y_hora_de_llegada;
 
 
 
@@ -145,8 +149,12 @@ app.get('/buscar-vuelos', async (req, res) => {
         const vuelosEncontrados = await Avion.find({
             Origen: { $regex: new RegExp(origen, 'i') },
             Destino: { $regex: new RegExp(destino, 'i') },
+            "Fecha_y_hora_de_salida": { $regex: new RegExp(fecha_salida, 'i') },
+            "Fecha_y_hora_de_llegada": { $regex: new RegExp(fecha_llegada, 'i') },
 
         });
+        //verificar que los datos llegan y los busca en la base de datos
+        console.log('Vuelos encontrados:', vuelosEncontrados);
 
         // Formatea las fechas antes de enviar la respuesta
         res.status(200).json(vuelosEncontrados);

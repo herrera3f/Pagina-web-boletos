@@ -171,7 +171,27 @@ footer {
     background-color:#ffffff ;
     color: #40b9f0; /* Cambia el color al pasar el cursor si es necesario */
     border: 1px solid #0b80be; /* Agrega un borde del mismo color */
- }
+}
+
+/* Agregar estilos para el contenedor del nombre de usuario y el botón de cerrar sesión */
+.user-container {
+    position: relative;
+}
+
+/* Estilo del contenedor del nombre de usuario */
+.user-info {
+    position: relative;
+    z-index: 1; /* Asegura que el nombre de usuario esté sobre el botón de cerrar sesión */
+}
+
+/* Estilo del botón de cerrar sesión */
+#logout-button {
+    position: absolute;
+    top: 100%; /* Alinear el botón de cerrar sesión justo debajo del contenedor del nombre de usuario */
+    left: 50%; /* Centrar el botón horizontalmente */
+    transform: translateX(-50%); /* Ajustar la posición para centrar exactamente */
+    z-index: 0; /* Asegurar que el botón esté detrás del nombre de usuario */
+}
 
 
 

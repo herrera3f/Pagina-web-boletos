@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,142 +12,188 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/navbarstyle.css' %}">
     <style>
-        body{
+        body {
             background-color: rgb(213, 213, 216);
-            
+
         }
+
         .card {
-            border: none; /* Elimina el borde de la tarjeta */
+            border: none;
+            /* Elimina el borde de la tarjeta */
         }
-        
+
         .card-img {
-            object-fit: cover; /* Ajusta el tamaño de la imagen para que se ajuste bien */
+            object-fit: cover;
+            /* Ajusta el tamaño de la imagen para que se ajuste bien */
         }
-        
+
         .btn-custom-reservar {
             /* Agrega estilos personalizados al botón si es necesario */
         }
-        
+
         /* Ajusta la altura de la tarjeta según tu diseño */
         .card {
-            height: 300px; /* Ajusta la altura según tus necesidades */
+            height: 300px;
+            /* Ajusta la altura según tus necesidades */
+        }
+        .texto-verde {
+            color: green;
         }
 
     </style>
 </head>
-<head>
+<body>
+    <head>
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
-            <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px" width="100px">
-            <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;"  >
-            <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
-                <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1" height="35px">
-                <span>Ayuda</span>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand  " href="#" style="display: flex; align-items: center; margin-left: 70px;">
+                <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-container" height="95px"
+                    width="100px">
+                <h1 class="fade-gradient" style="margin-left: 10px; ">Aero Reservas</h1>
             </a>
-            <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'home' %}">
-                <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home" class="user-logo mb-1" height="35px">
-                <span>Home</span>
-            </a>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'historial_reservas' %}">
-                        <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
-                        <span>Mis Viajes</span>
-                    </a>
-                </li>
-            </ul>
-
-            {% if usuario_rut %}
-            <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
-            <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'cerrar_sesion' %}">
-                <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                <span>Cerrar Sesión</span>
-            </a>
-        {% else %}
-            <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
-            <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
-                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                <span>Iniciar Sesión</span>
-            </a>
-        {% endif %}
-    </div>
-            
-        </div>
-    </nav>
-
-</head>
-
-<main class="container mt-5">
-    <h1 class="text-center">Resultados de Búsqueda</h1>
-
-    <div class="row justify-content-center">
-        {% if vuelos_encontrados %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;">
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                    <img src="https://cdn-icons-png.flaticon.com/128/906/906794.png" alt="logo ayuda" class="user-logo mb-1"
+                        height="35px">
+                    <span>Ayuda</span>
+                </a>
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                    href="{% url 'home' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/10513/10513052.png" alt="logo home"
+                        class="user-logo mb-1" height="35px">
+                    <span>Home</span>
+                </a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                            href="{% url 'historial_reservas' %}">
+                            <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario"
+                                class="user-logo mb-1" height="20px">
+                            <span>Mis Viajes</span>
+                        </a>
+                    </li>
+                </ul>
+    
+                {% if usuario_rut %}
+                <!-- El usuario está autenticado, mostrar botón de cerrar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                    href="{% url 'cerrar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1"
+                        height="30px">
+                    <span>Cerrar Sesión</span>
+                </a>
+                {% else %}
+                <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
+                <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2"
+                    href="{% url 'iniciar_sesion' %}">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828445.png" alt="logo ayuda"
+                        class="user-logo mb-1" height="30px">
+                    <span>Iniciar Sesión</span>
+                </a>
+                {% endif %}
+            </div>
+    
+            </div>
+        </nav>
+    
+    </head>
+    
+    <main class="container mt-5">
+        <h1 class="text-center">Resultados de Búsqueda</h1>
+    
+        <div class="row justify-content-center">
+            {% if vuelos_encontrados %}
             {% for vuelo in vuelos_encontrados %}
-            
-            <div class="card zoom-img" style="width: 23rem; height:23rem">
-                <div class="card-body ">
-                    <a><img src="{{vuelo.image}}" class="card-img-top zoom-img" alt="..."></a>
-                    <div class="row">
-                        <div class="col">
-                            <p class="card-text"><strong>Origen:</strong> {{vuelo.Origen}}</p>
-                        </div>
-                        <div class="col">
-                            <p class="card-text"><strong>Destino:</strong> {{vuelo.Destino}}</p>
+    
+            <div class="card mb-3" style="max-width: 800px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{vuelo.image}}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{vuelo.Aerolinea}}</h5>
+                            <div class="info-container d-flex flex-column">
+                                <div class="info-item">
+                                    <strong>Origen:</strong> {{vuelo.Origen}}
+                                </div>
+                                <div class="info-item">
+                                    <strong>Destino:</strong> {{vuelo.Destino}}
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="info-item">
+                                        <strong>Fecha salida:</strong> {{vuelo.Fecha_y_hora_de_salida}}
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Fecha llegada:</strong> {{vuelo.Fecha_y_hora_de_llegada}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-text">
+                                <strong>Capacidad:</strong> {{vuelo.Capacidad}}<br>
+                            </div>
+                            <a href="{% url 'reserva' %}?ID_vuelo=${vuelo.ID_Vuelos}" class="btn btn-custom-reservar">Reservar</a>
                         </div>
                     </div>
-
-                    <p class="card-text">Capacidad: {{vuelo.Capacidad}}</p>
-                    <p class="card-text">Precio: {{vuelo.Precio}}</p>
-                    <!-- Agrega otros campos necesarios -->
-                    <a href="{% url 'reserva' %}?ID_vuelo=${vuelo.ID_Vuelos}" class="btn btn-custom-reservar">Reservar</a>
+                </div>
+                <div class="card-footer text-body-secondary text-center">
+                    <strong>Precio:</strong> <span class="texto-verde">{{vuelo.Precio}}</span>
                 </div>
             </div>
+    
             {% endfor %}
-        {% else %}
+            {% else %}
             <p class="text-center">No se encontraron vuelos.</p>
-        {% endif %}
-    </div>
-</main>
-<footer class="bg-light text-center py-3 bg-body-secondary" style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+            {% endif %}
+        </div>
+    </main>
 
-    <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
-        <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad. <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
-    </div>
-
-    <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
-        <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs. <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
-    </div>
-
-    <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
-        <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas. <br>Premium Connectivity Partner</p>
-    </div>
-
-    <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
-        <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok" height="30px">
-        <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
-        <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter " height="30px" style="margin-left: 15px;">
-    </div>
-    <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
-        <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
-        © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
-    </div>
-
-</footer>
-
-
-
-
+    
+    <footer class="bg-light text-center py-3 bg-body-secondary"
+        style=" display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+    
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Confianza en tus compras.<br>Condiciones de compra. <br>Política de privacidad.
+                <br>Derechos y obligaciones del pasajero. <br>Black Friday. <br>Oferta Wow</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Somos Aero Reserva.<br>Contacto. <br>Trabaja en Aero Reservas. <br>FAQs.
+                <br>Relación con Inversores. <br>Sobre Aero Reservas</p>
+        </div>
+    
+        <div class="footer-section light-section2" style="flex: 1; text-align: center; margin-left: 300px;">
+            <p style="font-size: 12px;">Potencia tu negocio.<br>Agrega tu flota. <br>Programa de Agencias Afiliadas.
+                <br>Premium Connectivity Partner</p>
+        </div>
+    
+        <div class="footer-section " style="flex: 1; text-align: center; margin-left: 700px;">
+            <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Logo facebook" class="logo-facebbok"
+                height="30px">
+            <a href="https://www.instagram.com/b1mc3/"><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png"
+                    alt="Instagram logo" class="logo-instagram" height="30px" style="margin-left: 15px;"></a>
+            <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter logo" class="logo-twitter "
+                height="30px" style="margin-left: 15px;">
+        </div>
+        <div class="footer-section " style=" margin-top: 200px; margin-left: 70px;">
+            <img src="{% static 'Imagenes/logo.png' %}" alt="Logo de la aplicación" class="logo-footer" height="30px">
+            © 2023 Aero Reservas Chile. Bravo de Saravia 2980, Renca, Región Metropolitana. 600 555 2000
+        </div>
+    
+    </footer>
+    
+    
+    
+    
     <!-- Agrega la referencia a Bootstrap JS y Popper.js -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</body
+</body>
+
 
 </html>
