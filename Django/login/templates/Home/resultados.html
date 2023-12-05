@@ -136,7 +136,7 @@
                             <div class="card-text">
                                 <strong>Capacidad:</strong> {{vuelo.Capacidad}}<br>
                             </div>
-                            <a href="{% url 'reserva' %}?ID_vuelo=${vuelo.ID_Vuelos}" class="btn btn-custom-reservar">Reservar</a>
+                            <a href="{% url 'reserva' %}?ID_vuelo={{ vuelo.ID_Vuelos }}" class="btn btn-custom-reservar">Reservar</a>
                         </div>
                     </div>
                 </div>

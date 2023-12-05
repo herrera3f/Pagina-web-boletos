@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Reserva de Vuelo</title>
+    <!-- Agrega el enlace a Bootstrap aquí -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #868e96;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-primary">Tu reserva para el vuelo {{ detalles_reserva.nombre_vuelo }} ha sido confirmada.</h2>
+        <!-- Asegúrate de utilizar las claves correctas aquí -->
+        <p class="lead">Detalles de la reserva:</p>
+        <ul>
+            <li><strong>Nombre del vuelo:</strong> {{ detalles_reserva.nombre_apellido }}</li>
+            <li><strong>País:</strong> {{ detalles_reserva.pais }}</li>
+            <li><strong>Número de Documento:</strong> {{ detalles_reserva.numero_documento }}</li>
+            <li><strong>Fecha de Nacimiento:</strong> {{ detalles_reserva.fecha_nacimiento }}</li>
+            <li><strong>Sexo:</strong> {{ detalles_reserva.sexo }}</li>
+            <li><strong>Email:</strong> {{ detalles_reserva.email }}</li>
+            <li><strong>Teléfono:</strong> {{ detalles_reserva.telefono }}</li>
+            <!-- Agrega más detalles según sea necesario -->
+        </ul>
+        {% with vuelo=reserva_info.ID_Vuelos %}
+        {% if vuelo %}
+        <div class="info-item">
+            <strong>Aerolínea:</strong> {{ reserva_info.ID_Vuelos.Aerolinea }}
+        </div>
+        <div class="info-item">
+            <strong>Origen:</strong> {{ reserva_info.ID_Vuelos.Origen }}
+        </div>
+        <div class="info-item">
+            <strong>Destino:</strong> {{ reserva_info.ID_Vuelos.Destino }}
+        </div>
+        <!-- Agrega más detalles según sea necesario -->
+        
+        {% else %}
+        <p>Error al obtener la información del vuelo.</p>
+        {% endif %}
+        {% endwith %}
+        <p>Gracias por elegir nuestro servicio.</p>
+        <footer class="text-muted">
+            Este mensaje ha sido enviado automáticamente. Por favor, no responder a este correo.
+        </footer>
+    </div>
+</body>
+</body>
+
+</html>

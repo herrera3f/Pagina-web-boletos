@@ -52,6 +52,7 @@ def buscar_vuelos(request):
 
     # Realiza una solicitud HTTP a la API para obtener los vuelos
     url_api_node = 'http://localhost:3001/buscar-vuelos'
+        
     params = {
         'Origen': Origen,
         'Destino': Destino,
@@ -79,5 +80,30 @@ def buscar_vuelos(request):
     # Renderiza la página de resultados (resultados.html) con los vuelos encontrados
     return render(request, 'Home/resultados.html', context)
 
-def home(request):
-    return render(request, 'home/home.html', {'usuario_rut': request.session.get('usuario_rut')} )
+def home(request):  
+    # Obtener el rut del usuario de la sesión
+    usuario_rut = request.session.get('usuario_rut')
+
+    # Verificar si el usuario está autenticado
+    if usuario_rut:
+        # Obtener información del usuario utilizando la función obtener_usuario
+        usuario_info = obtener_usuario(usuario_rut)
+        print(f'Información del usuario: {usuario_info}')
+
+        # Verificar si se obtuvo la información del usuario correctamente
+        if usuario_info:
+            nombre_usuario = usuario_info.get('nombre', 'Usuario')  # Obtener el nombre del usuario
+            print(f'Nombre del usuario: {nombre_usuario}')
+        else:
+            nombre_usuario = 'Usuario'
+            print(f'No se pudo obtener el nombre del usuario')
+    else:
+        print(f'No se encontró el rut del usuario en la sesión')
+        nombre_usuario = 'Usuario'
+        
+
+    # Pasar el nombre del usuario al contexto
+    context = {'nombre_usuario': nombre_usuario, 'usuario_rut': usuario_rut}
+
+    # Renderizar la página de inicio con el contexto actualizado
+    return render(request, 'home/home.html', context)

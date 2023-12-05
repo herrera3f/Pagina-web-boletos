@@ -46,12 +46,12 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- agregar el Nombre de usuario en la barra de navegación -->
-            <div>
-
-            </div>
-
-
+            <p>{{ mensaje_bienvenida }}</p>
+            {% if nombre_usuario %}
+                <p>Nombre del Usuario: {{ nombre_usuario }}</p>
+            {% else %}
+                <p>Nombre del Usuario: No disponible</p>
+            {% endif %}
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 150px;">
                 <a
@@ -78,16 +78,18 @@
                 </ul>
                 <div id="user-container">
                     {% if usuario_rut %}
-                    <div class="user-container nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
-                        <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
-                        <span>{{ usuario_rut }}</span>
-                    
-                        <!-- También puedes mostrar un botón de cerrar sesión aquí si lo deseas -->
-                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-outline-light btn-square mx-2" id="logout-button" style="display: none;">
-                            <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
-                            <span>Cerrar Sesión</span>
-                        </a>
-                    </div>
+                        <div>
+                            <div class="user-container nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2">
+                                <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" alt="logo usuario" class="user-logo mb-1" height="20px">
+                                <span>{{ nombre_usuario }}</span>
+                                <!-- También puedes mostrar un botón de cerrar sesión aquí si lo deseas -->
+                                <a href="{% url 'cerrar_sesion' %}" class="btn btn-outline-light btn-square mx-2" id="logout-button" style="display: none;">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/660/660350.png" alt="logo ayuda" class="user-logo mb-1" height="30px">
+                                    <span>Cerrar Sesión</span>
+                                </a>
+                            </div>
+                        </div>
+
                     {% else %}
                         <!-- El usuario no está autenticado, mostrar botón de iniciar sesión -->
                         <a class="nav-link text-white d-flex flex-column align-items-center btn btn-outline-light btn-square mx-2" href="{% url 'iniciar_sesion' %}">
@@ -122,13 +124,13 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="Fecha_y_hora_de_salida">Fecha de Salida</label>
-                                    <input type="date" class="form-control" id="fechaSalida"
-                                        name="Fecha_y_hora_de_salida" >
+                                    <input type="date" class="form-control" id="fechaSalida" name="Fecha_y_hora_de_salida" value="{{ request.GET.Fecha_y_hora_de_salida }}" required>
+
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="Fecha_y_hora_de_llegada">Fecha de Llegada</label>
-                                    <input type="date" class="form-control" id="fechaLlegada"
-                                        name="Fecha_y_hora_de_llegada" >
+                                    <input type="date" class="form-control" id="fechaLlegada" name="Fecha_y_hora_de_llegada" value="{{ request.GET.Fecha_y_hora_de_llegada }}" required>
+
                                 </div>
                             </div>
                             <div class="form-row">
@@ -223,10 +225,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <p class="card-text"><strong>Salida:</strong> ${vuelo["Fecha y hora de salida"]}</p>
+                                        <p class="card-text"><strong>Salida:</strong> ${vuelo["Fecha_y_hora_de_salida"]}</p>
                                     </div>
                                     <div class="col">
-                                        <p class="card-text"><strong>Llegada:</strong> ${vuelo["Fecha y hora de llegada"]}</p>
+                                        <p class="card-text"><strong>Llegada:</strong> ${vuelo["Fecha_y_hora_de_llegada"]}</p>
                                     </div>
                                 </div>
                                 <p class="card-text">Capacidad: ${vuelo.Capacidad}</p>
@@ -252,29 +254,43 @@
         });
     </script>
     <script>
-        //cambiar el formato de la fecha de 2023-05-01 a 01/05/2021
-        function cambiarFormatoFecha(fecha) {
-            var fecha = document.getElementById("fechaSalida").value || document.getElementById("fechaLlegada").value;
-            var fecha = fecha.split("-");
-            var fecha = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
-            //dar vuelta de 2023-05-01 a 01/05/2021
-            var fecha = fecha.split("-").reverse().join("/");
+        // Cambiar el formato de la fecha de 2023-05-01 a 01/05/2021
+        function cambiarFormatoFecha() {
+            // Obtener los valores de las fechas
+            var fechaSalida = document.getElementById("fechaSalida").value;
+            var fechaLlegada = document.getElementById("fechaLlegada").value;
 
-            document.getElementById("fechaSalida").value = fecha;
-            document.getElementById("fechaLlegada").value = fecha;
+            // Verificar si las fechas tienen valores antes de intentar cambiar su formato
+            if (fechaSalida) {
+                fechaSalida = formatDate(fechaSalida);
+                document.getElementById("fechaSalida").value = fechaSalida;
+            }
+
+            if (fechaLlegada) {
+                fechaLlegada = formatDate(fechaLlegada);
+                document.getElementById("fechaLlegada").value = fechaLlegada;
+            }
         }
-        //insertar el valor de la fecha en el input
+
+        function formatDate(inputDate) {
+            var parts = inputDate.split("/");
+            // Reorganizar las partes de la fecha para el formato "yyyy-MM-dd"
+            return parts[2] + "-" + parts[1].padStart(2, '0') + "-" + parts[0].padStart(2, '0');
+        }
+
+        // Insertar el valor de la fecha en el input después de cargar la página
+        document.addEventListener("DOMContentLoaded", function () {
+            cambiarFormatoFecha();
+        });
+
+        // Manejar el evento de cambio de fecha
         document.getElementById("fechaSalida").addEventListener("change", cambiarFormatoFecha);
-        document.getElementById("fechaLlegada").addEventListener("change", cambiarFormatoFecha);     
-        //mostrar la decha al seleccionar el input
-        document.getElementById("fechaSalida").value = fecha;       
-        document.getElementById("fechaLlegada").value = fecha;
-        console.log(fecha);
+        document.getElementById("fechaLlegada").addEventListener("change", cambiarFormatoFecha);
 
 
-
-        
     </script>
+
+
     
 
 

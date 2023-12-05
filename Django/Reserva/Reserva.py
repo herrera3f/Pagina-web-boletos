@@ -4,6 +4,7 @@ import json
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from Reserva.email import enviar_correo_reserva
+import requests
 
 def enviar_comando_a_rabbitmq(comando):
     try:
@@ -35,7 +36,18 @@ def enviar_comando_a_rabbitmq(comando):
 
 def generar_voucher(request, reserva_info):
     # Renderiza la vista del voucher con la información de la reserva
-    return render(request, 'Reserva/voucher.html', reserva_info)
+    return render(request, 'Reserva/voucher.html', {
+        'nombre_apellido': reserva_info.get('nombre_apellido', 'Desconocido'),
+        'pais': reserva_info.get('pais', ''),
+        'numero_documento': reserva_info.get('Numero de Documento', ''),
+        'fecha_nacimiento': reserva_info.get('Fecha de Nacimiento', ''),
+        'sexo': reserva_info.get('sexo', ''),
+        'email': reserva_info.get('email', ''),
+        'telefono': reserva_info.get('telefono', ''),
+        # Agrega más detalles según sea necesario
+    })
+
+
 
 
 def reserva(request):
@@ -60,7 +72,15 @@ def reserva(request):
             
             # Otros datos...
             otro_vueloid = request.POST.get('ID_Vuelos')
-
+            api_url = f'http://localhost:3001/obtener-detalles-vuelo-id?id={otro_vueloid}'
+            # Reemplaza con la URL real de tu API
+            try:
+                response = requests.get(api_url)
+                response.raise_for_status()
+                vuelo = response.json()
+            except requests.exceptions.RequestException as e:
+                print(f'Error al obtener la información del vuelo desde la API: {e}')
+                vuelo = None
             # Crear comandos para MySQL y MongoDB con el Rut del usuario
             comando_mysql = {
                 'ID_Cliente': usuario_rut,
@@ -101,11 +121,14 @@ def reserva(request):
                 'sexo': sexo,
                 'email': email,
                 'telefono': telefono,
+                'ID_Vuelos': vuelo
                 # Agrega más información según sea necesario
             }
+            print(f'ID_Vuelos en reserva_info: {reserva_info["ID_Vuelos"]}')  # Añade este print
+
             email_usuario = email
-            detalles_reserva = {'nombre_apellido': nombre_apellido, 'pais': pais, 'Numero de Documento': documento, 'Fecha de Nacimiento': nacimiento, 'sexo': sexo, 'email': email, 'telefono': telefono}
-            enviar_correo_reserva(email_usuario, detalles_reserva)
+            detalles_reserva = {'nombre_apellido': nombre_apellido, 'pais': pais, 'Numero de Documento': documento, 'Fecha de Nacimiento': nacimiento, 'sexo': sexo, 'email': email, 'telefono': telefono, 'ID_Vuelos': vuelo}
+            enviar_correo_reserva(email_usuario, detalles_reserva, reserva_info)
             
             # Redirige al usuario a la vista del voucher
             return generar_voucher(request, reserva_info)

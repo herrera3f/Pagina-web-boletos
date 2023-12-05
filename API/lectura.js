@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
 });
 const avionSchema = new mongoose.Schema({
     "image": String,
-    "ID Vuelos": String,
+    "ID_Vuelos": String,
     "Nombre vuelo": String,
     "ID Aerolinea": String,
     "Origen": String,
@@ -113,6 +113,30 @@ app.get('/obtener-detalles-vuelo', async (req, res) => {
         res.status(500).json({ mensaje: 'Error al obtener detalles del vuelo' });
     }
 });
+app.get('/obtener-detalles-vuelo-id', async (req, res) => {
+    try {
+        const vueloId = req.query.id;
+        
+        console.log(`Solicitud recibida para obtener detalles del vuelo con ID: ${vueloId}`);
+
+        // Utiliza Mongoose para buscar el avión por su ID
+        const detallesVuelo = await Avion.findOne({ "ID_Vuelos": vueloId });
+
+        if (!detallesVuelo) {
+            console.log(`Vuelo con ID ${vueloId} no encontrado`);
+            return res.status(404).json({ mensaje: 'Vuelo no encontrado' });
+        }
+
+        console.log(`Detalles del vuelo encontrados: ${JSON.stringify(detallesVuelo)}`);
+
+        res.status(200).json(detallesVuelo);
+    } catch (error) {
+        console.error('Error al obtener detalles del vuelo:', error);
+        res.status(500).json({ mensaje: 'Error al obtener detalles del vuelo' });
+    }
+});
+
+
 app.get('/obtener-detalles-vuelo-historial', async (req, res) => {
     try {
         const vueloId = req.query.id;

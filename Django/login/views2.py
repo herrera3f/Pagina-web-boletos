@@ -23,7 +23,6 @@ def iniciar_sesion(request):
             response_data = json.loads(response.read().decode('utf-8'))
 
             if response_data.get('usuario'):
-
                 # Aquí deberías almacenar el "Rut" en la sesión
                 request.session['usuario_rut'] = response_data['usuario']['rut']
                 print(f'Rut almacenado en la sesión: {response_data["usuario"]["rut"]}')
@@ -33,15 +32,12 @@ def iniciar_sesion(request):
                 logging.info(f'Sesión iniciada para el usuario: {username}')
 
                 # Redirigir al usuario a la página deseada después del inicio de sesión
-                return render(request,'Home/Home.html',{'usuario_rut': request.session.get('usuario_rut')})  # Reemplaza 'pagina_de_inicio' con la URL deseada
+                return redirect('home')  # Reemplaza 'pagina_de_inicio' con la URL deseada
             else:
                 # Manejar el caso de autenticación fallida desde la API de Node.js
                 logging.error('Error en la autenticación desde la API de Node.js')
-                return render(request, 'login/iniciar_sesion.html', {'login_error': True})
+            return render(request, 'login/iniciar_sesion.html', {'login_error': True})
         except Exception as e:
             # Manejar otras excepciones, como problemas de conexión
             logging.error(f'Error en la solicitud a la API de Node.js: {str(e)}')
-            return render(request, 'login/iniciar_sesion.html', {'login_error': True})
-    else:
-        # Renderizar el formulario de inicio de sesión
-        return render(request, 'login/iniciar_sesion.html')
+    return render(request, 'login/iniciar_sesion.html', {'login_error': True})
