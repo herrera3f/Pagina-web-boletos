@@ -39,7 +39,7 @@ footer {
     text-align: center; /* Centra el texto horizontalmente en el botón */
     text-decoration: none; /* Elimina la subrayado de los enlaces */
     transition: box-shadow 0.3s ease; /* Transición para la sombra */
-    transition: background-color 0.3s;
+
 }
 
 .btn-square:hover {
@@ -67,7 +67,7 @@ footer {
 .navbar-custom .nav-link:hover span,
 .navbar-custom .navbar-brand:hover span,
 .navbar-custom .navbar-nav li:hover span {
-    color: rgb(238, 236, 236); /* Cambia el color del texto al pasar el cursor */
+    color: #000000 /* Cambia el color del texto al pasar el cursor */
 }
 
 .fade-gradient {
