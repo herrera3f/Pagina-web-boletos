@@ -305,3 +305,106 @@ async function realizarOperacionMongoDB(comando) {
         }
     }
 }
+
+
+
+
+app.post('/registro-mongodb-android', async (req, res) => {
+    const comando = req.body;
+
+    if (comando.operacion === 'mongodb') {
+        const { operacion, rut, nombre, email, contraseña } = req.body;
+        const mongoURI = 'mongodb+srv://benjaminmartinez29:Martinez890@User.bhz2ags.mongodb.net/sistema_reserva?retryWrites=true&w=majority';
+        let conexionMongoDB;
+
+        try {
+            conexionMongoDB = mongoose.createConnection(mongoURI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            });
+            console.log('Conexión a MongoDB establecida con éxito.');
+
+            const usuarioSchema = new mongoose.Schema({
+                rut: String,
+                nombre: String,
+                email: String,
+                contraseña: String,
+            });
+
+            const Usuario = conexionMongoDB.model('usuarios', usuarioSchema);
+
+            await Usuario.create({ rut, nombre, email, contraseña });
+
+            console.log('Usuario agregado en MongoDB (Android).');
+            res.send('Registro en MongoDB (Android) realizado con éxito');
+        } catch (error) {
+            console.error('Error al realizar operación en MongoDB (Android):', error);
+            res.status(500).send('Error al realizar operación en MongoDB (Android)');
+        } finally {
+            if (conexionMongoDB) {
+                conexionMongoDB.close();
+            }
+        }
+    } else {
+        res.status(400).send('Operación no válida');
+    }
+});
+
+
+
+
+
+
+    app.post('/registro-sql-android', async (req, res) => {
+        const comando = req.body;
+    
+        if (comando.operacion === 'sql') {
+            const conexionMySQL = mysql.createConnection({
+                host: 'db4free.net',
+                database: 'bd_brandon',
+                user: 'herrera3f',
+                password: 'Bsmh.7700',
+            });
+    
+            try {
+                const clienteExistente = await new Promise((resolve, reject) => {
+                    const sql = 'SELECT * FROM clientes WHERE rut = ?';
+                    conexionMySQL.query(sql, [comando.rut], (error, results) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(results.length > 0 ? results[0] : null);
+                        }
+                    });
+                });
+    
+                if (!clienteExistente) {
+                    // El cliente no existe, realiza una inserción
+                    const sql = 'INSERT INTO clientes (rut, nombre, email, contraseña) VALUES (?, ?, ?, ?)';
+                    const values = [comando.rut, comando.nombre, comando.email, comando.contraseña];
+    
+                    await new Promise((resolve, reject) => {
+                        conexionMySQL.query(sql, values, (error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                console.log('Cliente agregado en MySQL (Android).');
+                                resolve();
+                            }
+                        });
+                    });
+                }
+                res.send('Registro en SQL (Android) realizado con éxito');
+            } catch (error) {
+                console.error('Error al realizar operación en MySQL (Android):', error);
+                res.status(500).send('Error al realizar operación en MySQL (Android)');
+            } finally {
+                if (conexionMySQL) {
+                    conexionMySQL.end();
+                }
+            }
+        } else {
+            res.status(400).send('Operación no válida');
+        }
+    });
+
