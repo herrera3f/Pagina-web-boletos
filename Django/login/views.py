@@ -47,7 +47,7 @@ def registrar_usuario(request):
         enviar_comando_a_rabbitmq(comando_registro)
         enviar_comando_a_rabbitmq(comando_registro1)
 
-        return HttpResponseRedirect('/registro_exitoso/')
+        return redirect('iniciar_sesion')
 
     return render(request, 'login/registro.html')
 
